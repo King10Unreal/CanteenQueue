@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#12372a" />
+    <title>Canteenly — Campus food, without the queue</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="announcement"><span class="pulse-dot"></span> Main Canteen is accepting orders · Avg. pickup in 8 min <button class="announcement-close" aria-label="Dismiss notice">×</button></div>
+    <header class="site-header">
+      <a href="#top" class="brand" aria-label="Canteenly home">
+        <span class="brand-mark">C</span><span>Canteenly</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#menu">Menu</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#staff">For staff</a>
+      </nav>
+      <div class="header-actions">
+        <button class="text-button login-trigger">Log in</button>
+        <button class="button button-small queue-trigger">My queue <span class="queue-count">0</span></button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">YOUR CAMPUS, SERVED SMARTER</p>
+          <h1>Good food.<br /><em>No waiting.</em></h1>
+          <p class="hero-description">Order from your favourite campus counter, skip the crowd, and collect when your food is ready.</p>
+          <div class="hero-actions">
+            <a class="button button-large" href="#menu">Start an order <span aria-hidden="true">→</span></a>
+            <button class="watch-button" id="how-button"><span class="play-icon">▶</span> See how it works</button>
+          </div>
+          <div class="hero-proof">
+            <div class="avatar-stack" aria-hidden="true"><span>R</span><span>K</span><span>J</span><span>+</span></div>
+            <p><strong>1,200+ students</strong><br />already skipping the line</p>
+          </div>
+        </div>
+        <div class="hero-art" aria-label="Preview of a live order status">
+          <div class="sun-disc"></div>
+          <div class="leaf leaf-one">✦</div><div class="leaf leaf-two">✦</div><div class="leaf leaf-three">✦</div>
+          <div class="meal-plate"><span class="plate-dish">🥘</span></div>
+          <div class="order-card floating-card">
+            <div class="order-card-header"><span class="mini-logo">C</span><span>LIVE ORDER</span><span class="card-menu">•••</span></div>
+            <p class="status-label">PREPARING NOW</p>
+            <div class="order-line"><strong>#A214</strong><span>Veg Thali · Cold Coffee</span></div>
+            <div class="progress-track"><span></span></div>
+            <div class="order-footer"><span><i class="clock-icon">◷</i> Ready in <strong>6 min</strong></span><span class="live-tag">● LIVE</span></div>
+          </div>
+          <div class="token-bubble"><span class="token-icon">⌁</span><span>Your token<br /><strong>#A214</strong></span></div>
+          <div class="ready-bubble"><span>✓</span> Ready for pickup</div>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="Canteen status">
+        <div><span class="strip-icon">◷</span><p><strong>8 min</strong><br />average wait</p></div>
+        <div><span class="strip-icon">▦</span><p><strong>Live</strong><br />menu availability</p></div>
+        <div><span class="strip-icon">⌁</span><p><strong>Digital</strong><br />tokens & payments</p></div>
+        <div><span class="strip-icon">♧</span><p><strong>Less waste</strong><br />more good food</p></div>
+      </section>
+
+      <section class="menu-section" id="menu">
+        <div class="section-heading">
+          <div><p class="eyebrow">PICK YOUR FAVOURITES</p><h2>Today’s menu</h2><p class="section-description">Made fresh, right here on campus. Tap to add what you want.</p></div>
+          <div class="canteen-selector"><span class="online-dot"></span><span><small>SERVING FROM</small><strong>Main Canteen</strong></span><span class="chevron">⌄</span></div>
+        </div>
+        <div class="menu-toolbar">
+          <div class="category-tabs" role="tablist" aria-label="Menu categories">
+            <button class="active" data-category="all">All</button>
+            <button data-category="meals">Meals</button>
+            <button data-category="snacks">Snacks</button>
+            <button data-category="drinks">Drinks</button>
+            <button data-category="sweets">Sweets</button>
+          </div>
+          <label class="search-box"><span>⌕</span><input type="search" id="menu-search" placeholder="Search the menu" /></label>
+        </div>
+        <div class="menu-layout">
+          <div class="menu-grid" id="menu-grid"></div>
+          <aside class="cart-panel" id="cart-panel">
+            <div class="cart-heading"><div><p class="eyebrow">YOUR ORDER</p><h3>All set?</h3></div><span class="cart-bag">⌑<b id="cart-items-count">0</b></span></div>
+            <div id="cart-empty" class="cart-empty"><span>☼</span><p>Your cart is feeling a little hungry.</p><a href="#menu">Browse today’s menu</a></div>
+            <div id="cart-content" hidden>
+              <div id="cart-items" class="cart-items"></div>
+              <div class="cart-note"><span>✦</span> You can add special instructions at checkout.</div>
+              <div class="cart-total"><span>Total</span><strong id="cart-total">₹0</strong></div>
+              <button class="button checkout-button" id="checkout-button">Place order <span>→</span></button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="steps-section" id="how-it-works">
+        <div class="steps-intro"><p class="eyebrow">A BETTER LUNCH BREAK</p><h2>Three taps to<br /><em>more free time.</em></h2><p>We have made the canteen rush a thing of the past.</p><a href="#menu" class="text-link">Order your meal <span>→</span></a></div>
+        <ol class="steps-list">
+          <li><span class="step-number">01</span><div class="step-visual browse-visual"><div class="mini-menu-line"><i></i><i></i><i></i></div><div class="mini-menu-line short"><i></i><i></i></div><span>+</span></div><h3>Browse & order</h3><p>See what’s fresh, add your favourites and pay securely before you head over.</p></li>
+          <li><span class="step-number">02</span><div class="step-visual token-visual"><span>⌁</span><strong>A214</strong><small>YOUR DIGITAL TOKEN</small></div><h3>Get your token</h3><p>Your digital token gives you a place in line — no paper slips, no crowding.</p></li>
+          <li><span class="step-number">03</span><div class="step-visual notify-visual"><span class="notify-bell">♧</span><span class="notify-dot">✓</span><p>Order ready!</p></div><h3>Collect & enjoy</h3><p>We’ll let you know when it’s ready. Just show your token and pick it up.</p></li>
+        </ol>
+      </section>
+
+      <section class="queue-section" aria-label="Live queue status">
+        <div class="queue-copy"><p class="eyebrow">ALWAYS IN THE KNOW</p><h2>Your order,<br /><em>in your pocket.</em></h2><p>Check your exact place in the queue and your estimated pickup time from anywhere on campus.</p><ul><li><span>✓</span> Real-time position updates</li><li><span>✓</span> Ready-to-collect notification</li><li><span>✓</span> One simple digital token</li></ul><button class="button queue-trigger">View demo queue <span>→</span></button></div>
+        <div class="phone-wrap">
+          <div class="phone"><div class="phone-notch"></div><div class="phone-screen"><div class="phone-nav"><span class="mini-logo">C</span><span>Order details</span><span>•••</span></div><p class="phone-greeting">You’re almost there.</p><div class="phone-token"><span>YOUR TOKEN</span><strong>#A214</strong><i></i><small>MAIN CANTEEN</small></div><div class="phone-position"><div><span>Your place in line</span><strong>03<small>rd</small></strong></div><div><span>Est. pickup</span><strong>12:42<small> pm</small></strong></div></div><div class="phone-progress"><div><span>Order received</span><b>✓</b></div><div><span>Being prepared</span><b class="active">●</b></div><div><span>Ready for pickup</span><b>○</b></div></div><div class="phone-food"><span>Veg Thali</span><strong>₹60</strong><small>+ Cold Coffee</small></div></div></div>
+          <div class="phone-float one">↑ 2 places<br /><strong>moved up</strong></div><div class="phone-float two"><span>✓</span> We’ll notify you</div>
+        </div>
+      </section>
+
+      <section class="staff-section" id="staff">
+        <div class="staff-copy"><p class="eyebrow">BUILT FOR THE OTHER SIDE OF THE COUNTER</p><h2>A calmer canteen<br />starts <em>here.</em></h2><p>Give your kitchen a clear, live view of every order. Fewer calls, fewer mix-ups, happier customers.</p><a class="text-link" href="#staff-demo">Explore the staff view <span>→</span></a></div>
+        <div class="staff-dashboard" id="staff-demo"><div class="staff-top"><div><span class="mini-logo">C</span><strong>Canteenly <small>Staff</small></strong></div><span class="staff-avatar">SK</span></div><div class="staff-main"><div class="staff-heading"><div><p>GOOD AFTERNOON, SANA</p><h3>Here’s your counter.</h3></div><button id="ready-next">Mark next ready <span>→</span></button></div><div class="staff-stats"><span><strong id="active-orders">12</strong>Active orders</span><span><strong>8 min</strong>Avg. wait</span><span><strong>24</strong>Today</span></div><div class="staff-orders"><p>UP NEXT <span>VIEW ALL</span></p><div id="staff-orders-list"></div></div></div></div>
+      </section>
+
+      <section class="closing-cta"><div><p class="eyebrow">LUNCH BREAK, UPGRADED</p><h2>Less queue.<br /><em>More you.</em></h2><a class="button button-light button-large" href="#menu">Order now <span>→</span></a></div><div class="cta-art"><span class="cta-circle one"></span><span class="cta-circle two"></span><span class="cta-plate">🍱</span><span class="cta-spark">✦</span></div></section>
+    </main>
+
+    <footer><a href="#top" class="brand"><span class="brand-mark">C</span><span>Canteenly</span></a><p>Made for better campus breaks.</p><div><a href="#menu">Menu</a><a href="#how-it-works">How it works</a><a href="#staff">For staff</a></div></footer>
+
+    <dialog id="login-modal" class="modal"><button class="modal-close" aria-label="Close">×</button><span class="modal-icon">C</span><p class="eyebrow">WELCOME BACK</p><h2>Let’s get you fed.</h2><label>Student ID<input type="text" placeholder="e.g. STU2026001" /></label><label>Password<input type="password" placeholder="Your password" /></label><button class="button login-submit">Log in <span>→</span></button><p class="modal-footer">New here? <a href="#">Create an account</a></p></dialog>
+
+    <dialog id="queue-modal" class="modal queue-modal"><button class="modal-close" aria-label="Close">×</button><p class="eyebrow">LIVE QUEUE STATUS</p><div id="queue-modal-content"></div></dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
