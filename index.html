@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="auth.css" />
   </head>
   <body>
     <div class="announcement"><span class="pulse-dot"></span> Main Canteen is accepting orders · Avg. pickup in 8 min <button class="announcement-close" aria-label="Dismiss notice">×</button></div>
@@ -19,10 +20,13 @@
       <nav aria-label="Main navigation">
         <a href="#menu">Menu</a>
         <a href="#how-it-works">How it works</a>
-        <a href="#staff">For staff</a>
+        <a id="staff-nav" href="#staff" hidden>Staff workspace</a>
+        <a id="admin-nav" href="#admin" hidden>Admin</a>
       </nav>
-      <div class="header-actions">
-        <button class="text-button login-trigger">Log in</button>
+      <div class="header-actions auth-actions">
+        <span id="current-user" class="current-user" hidden></span>
+        <button id="auth-button" class="text-button login-trigger">Log in</button>
+        <button id="logout-button" class="text-button" hidden>Log out</button>
         <button class="button button-small queue-trigger">My queue <span class="queue-count">0</span></button>
       </div>
     </header>
@@ -112,12 +116,42 @@
         </div>
       </section>
 
-      <section class="staff-section" id="staff">
+      <section class="staff-section" id="staff" hidden>
         <div class="staff-copy"><p class="eyebrow">BUILT FOR THE OTHER SIDE OF THE COUNTER</p><h2>A calmer canteen<br />starts <em>here.</em></h2><p>Give your kitchen a clear, live view of every order. Fewer calls, fewer mix-ups, happier customers.</p><a class="text-link" href="#staff-demo">Explore the staff view <span>→</span></a></div>
         <div class="staff-dashboard" id="staff-demo"><div class="staff-top"><div><span class="mini-logo">C</span><strong>Canteenly <small>Staff</small></strong></div><span class="staff-avatar">SK</span></div><div class="staff-main"><div class="staff-heading"><div><p>GOOD AFTERNOON, SANA</p><h3>Here’s your counter.</h3></div><button id="ready-next">Mark next ready <span>→</span></button></div><div class="staff-stats"><span><strong id="active-orders">12</strong>Active orders</span><span><strong>8 min</strong>Avg. wait</span><span><strong>24</strong>Today</span></div><div class="staff-orders"><p>UP NEXT <span>VIEW ALL</span></p><div id="staff-orders-list"></div></div></div></div>
       </section>
 
       <section class="closing-cta"><div><p class="eyebrow">LUNCH BREAK, UPGRADED</p><h2>Less queue.<br /><em>More you.</em></h2><a class="button button-light button-large" href="#menu">Order now <span>→</span></a></div><div class="cta-art"><span class="cta-circle one"></span><span class="cta-circle two"></span><span class="cta-plate">🍱</span><span class="cta-spark">✦</span></div></section>
+      <section class="staff-menu-section" id="staff-menu" hidden>
+        <div><p class="eyebrow">STAFF MENU CONTROL</p><h2>Keep the menu<br /><em>accurate.</em></h2><p>Set an item available or sold out. Students see the change immediately when they browse the menu.</p></div>
+        <div class="staff-menu-panel"><p class="eyebrow">LIVE AVAILABILITY</p><div id="staff-menu-list"></div></div>
+      </section>
+
+      <section class="admin-section" id="admin" hidden>
+        <div class="admin-intro">
+          <p class="eyebrow">ADMIN CONSOLE</p>
+          <h2>Manage the<br /><em>canteen team.</em></h2>
+          <p>Only administrator accounts can create staff credentials and view operational reports.</p>
+        </div>
+        <div class="admin-workspace">
+          <div class="report-grid" aria-label="Canteen report">
+            <div><small>ALL ORDERS</small><strong id="report-orders">0</strong></div>
+            <div><small>READY TO COLLECT</small><strong id="report-ready">0</strong></div>
+            <div><small>STUDENT ACCOUNTS</small><strong id="report-students">0</strong></div>
+          </div>
+          <div class="admin-columns">
+            <form id="staff-account-form" class="admin-form">
+              <p class="eyebrow">CREATE STAFF LOGIN</p>
+              <label>Name<input name="name" required minlength="2" placeholder="Staff member name" /></label>
+              <label>Staff ID<input name="schoolId" required pattern="[A-Za-z0-9_-]{3,30}" placeholder="e.g. STAFF1002" /></label>
+              <label>Temporary password<input name="password" required minlength="8" type="password" placeholder="At least 8 characters" /></label>
+              <p id="staff-create-error" class="form-error" role="alert"></p>
+              <button class="button" type="submit">Create staff account <span>-&gt;</span></button>
+            </form>
+            <div class="staff-accounts"><p class="eyebrow">STAFF ACCOUNTS</p><ul id="staff-account-list"></ul></div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer><a href="#top" class="brand"><span class="brand-mark">C</span><span>Canteenly</span></a><p>Made for better campus breaks.</p><div><a href="#menu">Menu</a><a href="#how-it-works">How it works</a><a href="#staff">For staff</a></div></footer>
@@ -125,6 +159,7 @@
     <dialog id="login-modal" class="modal"><button class="modal-close" aria-label="Close">×</button><span class="modal-icon">C</span><p class="eyebrow">WELCOME BACK</p><h2>Let’s get you fed.</h2><label>Student ID<input type="text" placeholder="e.g. STU2026001" /></label><label>Password<input type="password" placeholder="Your password" /></label><button class="button login-submit">Log in <span>→</span></button><p class="modal-footer">New here? <a href="#">Create an account</a></p></dialog>
 
     <dialog id="queue-modal" class="modal queue-modal"><button class="modal-close" aria-label="Close">×</button><p class="eyebrow">LIVE QUEUE STATUS</p><div id="queue-modal-content"></div></dialog>
+    <dialog id="auth-modal" class="modal auth-modal"><button class="modal-close" aria-label="Close">x</button><span class="modal-icon">C</span><p class="eyebrow">CANTEENLY ACCESS</p><h2>Sign in to your role.</h2><p class="modal-description">Use your school ID and password. Your account determines the tools you can access.</p><div class="auth-tabs"><button id="show-login" class="active" type="button">Log in</button><button id="show-register" type="button">Student sign up</button></div><form id="login-form"><label>School / Staff / Admin ID<input name="schoolId" required autocomplete="username" placeholder="e.g. STU2026001" /></label><label>Password<input name="password" required autocomplete="current-password" type="password" placeholder="Your password" /></label><p id="login-error" class="form-error" role="alert"></p><button class="button login-submit" type="submit">Log in <span>-&gt;</span></button></form><form id="register-form" hidden><label>Your name<input name="name" required minlength="2" placeholder="Your full name" /></label><label>School ID<input name="schoolId" required pattern="[A-Za-z0-9_-]{3,30}" placeholder="e.g. STU2026002" /></label><label>Choose password<input name="password" required minlength="8" type="password" autocomplete="new-password" placeholder="At least 8 characters" /></label><p id="register-error" class="form-error" role="alert"></p><button class="button login-submit" type="submit">Create student account <span>-&gt;</span></button></form><p class="demo-credentials"><strong>Demo accounts</strong><br />Student: STU2026001 / student123<br />Staff: STAFF1001 / staff123<br />Admin: ADMIN001 / admin123</p></dialog>
     <div id="toast" role="status" aria-live="polite"></div>
     <script src="app.js"></script>
   </body>
