@@ -343,11 +343,12 @@ $('#show-register').addEventListener('click', () => setModalMode('register'));
 
 $('#login-form').addEventListener('submit', async event => {
   event.preventDefault();
-  const form = new FormData(event.currentTarget);
+  const formElement = event.currentTarget;
+  const form = new FormData(formElement);
   try {
     const { user } = await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ schoolId: form.get('schoolId'), password: form.get('password') }) });
     state.user = user;
-    event.currentTarget.reset();
+    formElement.reset();
     $('#auth-modal').close();
     applyAuthState();
     showToast(`Welcome, ${user.name}. You are signed in as ${roleLabel(user.role)}.`);
@@ -358,11 +359,12 @@ $('#login-form').addEventListener('submit', async event => {
 
 $('#register-form').addEventListener('submit', async event => {
   event.preventDefault();
-  const form = new FormData(event.currentTarget);
+  const formElement = event.currentTarget;
+  const form = new FormData(formElement);
   try {
     const { user } = await api('/api/auth/register', { method: 'POST', body: JSON.stringify({ name: form.get('name'), schoolId: form.get('schoolId'), password: form.get('password') }) });
     state.user = user;
-    event.currentTarget.reset();
+    formElement.reset();
     $('#auth-modal').close();
     applyAuthState();
     showToast('Student account created. You can now place an order.');
@@ -373,10 +375,11 @@ $('#register-form').addEventListener('submit', async event => {
 
 $('#staff-account-form').addEventListener('submit', async event => {
   event.preventDefault();
-  const form = new FormData(event.currentTarget);
+  const formElement = event.currentTarget;
+  const form = new FormData(formElement);
   try {
     await api('/api/admin/staff', { method: 'POST', body: JSON.stringify({ name: form.get('name'), schoolId: form.get('schoolId'), password: form.get('password') }) });
-    event.currentTarget.reset();
+    formElement.reset();
     showToast('Staff account created.');
     await refreshAdmin();
   } catch (error) {
