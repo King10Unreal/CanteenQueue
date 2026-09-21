@@ -3,7 +3,7 @@ services:
     runtime: node
     name: canteen-queue-management
     plan: free
-    buildCommand: npm ci
+    buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /api/health
     autoDeployTrigger: commit
